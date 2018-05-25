@@ -1,6 +1,8 @@
 package com.example.niamhtohill.movieappudacity;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.Context;
@@ -9,6 +11,7 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -21,11 +24,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private static final String MOVIES_URL_LINK = "https://api.themoviedb.org/3/movie/popular?api_key=";
     final static String API_KEY = "1119711545cd4fbc29520df875c8d677";
-    public static final String MOVIES_URL_LINK_FINAL = MOVIES_URL_LINK+API_KEY;
+    public static  String MOVIES_URL_LINK_FINAL = MOVIES_URL_LINK+API_KEY;
 
     public static final int MOVIE_ID =1;
     public GridView movieGrid;
     public MovieAdapter movieAdapter;
+    public TextView noInternet;
+    public View loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +43,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader(MOVIE_ID,null, this).forceLoad();
         }else{
-            View loadingBar = findViewById(R.id.progressBar);
+            loadingBar = findViewById(R.id.progressBar);
             loadingBar.setVisibility(View.GONE);
-            TextView noInternet = findViewById(R.id.no_connection_tv);
+            noInternet = findViewById(R.id.no_connection_tv);
             noInternet.setVisibility(View.VISIBLE);
         }
         movieGrid = findViewById(R.id.grid);
@@ -68,6 +73,66 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.action_button){
+            final String popular = "Most Popular";
+            final String rated = "Highest Rated";
+            final String cancel = "Cancel";
+            final String [] options = {popular,rated,cancel};
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setItems(options, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //if the user selects "popular" from the settings menu
+                    if(options[which] == popular){
+                        //need to create a new URL for popular
+                        MOVIES_URL_LINK_FINAL = MOVIES_URL_LINK;
+                        boolean connectionStatus = checkInternet();
+                        //check is there a connection to reorder movies
+                        if(connectionStatus){
+                            getLoaderManager().restartLoader(0,null,MainActivity.this).forceLoad();
+                            noInternet.setVisibility(View.INVISIBLE);
+                        }else{
+                            //if no connection then stop loading and display TV to user
+                            loadingBar = findViewById(R.id.progressBar);
+                            loadingBar.setVisibility(View.GONE);
+                            noInternet.setVisibility(View.VISIBLE);
+                            movieAdapter.clear();
+                        }
+                    }
+                    //if the user selects "highest rated" from the menu
+                    if(options[which]==rated){
+                        //need to create a new URL for rated
+                        MOVIES_URL_LINK_FINAL = MOVIES_URL_LINK;
+                        boolean connectionStatus = checkInternet();
+                        //check is there a connection to reorder movies
+                        if(connectionStatus){
+                            getLoaderManager().restartLoader(0,null,MainActivity.this).forceLoad();
+                            noInternet.setVisibility(View.INVISIBLE);
+                        }else{
+                            //if no connection then stop loading and display TV to user
+                            loadingBar = findViewById(R.id.progressBar);
+                            loadingBar.setVisibility(View.GONE);
+                            noInternet.setVisibility(View.VISIBLE);
+                            movieAdapter.clear();
+                        }
+                    }
+                    //else if they hit cancel
+                    else if (options[which]==cancel){
+                        dialog.dismiss();
+                    }
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public boolean checkInternet(){
