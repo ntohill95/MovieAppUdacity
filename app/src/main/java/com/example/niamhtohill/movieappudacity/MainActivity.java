@@ -24,6 +24,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>> {
 
     private static final String MOVIES_URL_LINK = "https://api.themoviedb.org/3/movie/popular?api_key=";
+    private static final String MOVIES_URL_RATED = "https://api.themoviedb.org/3/movie/top_rated?api_key=";
     final static String API_KEY = "1119711545cd4fbc29520df875c8d677";
     public static  String MOVIES_URL_LINK_FINAL = MOVIES_URL_LINK+API_KEY;
 
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     //if the user selects "highest rated" from the menu
                     if(options[which]==rated){
                         //need to create a new URL for rated
-                        MOVIES_URL_LINK_FINAL = MOVIES_URL_LINK;
+                        MOVIES_URL_LINK_FINAL = MOVIES_URL_RATED;
                         boolean connectionStatus = checkInternet();
                         //check is there a connection to reorder movies
                         if(connectionStatus){
