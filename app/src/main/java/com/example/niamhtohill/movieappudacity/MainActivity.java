@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         loadingBar.setVisibility(View.GONE);
         if(movieAdapter != null){
             movieAdapter.addAll(movies);
+            movieAdapter.notifyDataSetChanged();
         }
     }
 
