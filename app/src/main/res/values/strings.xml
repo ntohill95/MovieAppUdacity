@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MovieAppUdacity</string>
+    <string name="no_internet">No Internet Connection</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="movie_release">Movie Release Date</string>
+    <string name="movie_synopsis">Movie Synopsis</string>
+    <string name="movie_vote">Average Vote</string>
+    <string name="movie_details">Movie Details</string>
+</resources>
