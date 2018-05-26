@@ -4,12 +4,16 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by niamhtohill on 24/05/2018.
@@ -48,8 +52,18 @@ public class MovieDetails extends AppCompatActivity{
 
             movieVoteStr = movieVoteStr + "/10";
             //TODO need to format date
+            SimpleDateFormat jsonFormat = new SimpleDateFormat("yyyy-mm-dd");
+            SimpleDateFormat desiredFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String reformatted = "";
+            try{
+                reformatted = desiredFormat.format((jsonFormat.parse(movieReleaseStr)));
+            }catch (ParseException e){
+                Log.e("PARSE ERROR", e.getMessage());
+            }
+
+
             movieTitle.setText(movieTitleStr);
-            movieRelease.setText(movieReleaseStr);
+            movieRelease.setText(reformatted);
             movieSynop.setText(movieSynopsisStr);
             movieVote.setText(movieVoteStr);
             String link = "http://image.tmdb.org/t/p/w185";
