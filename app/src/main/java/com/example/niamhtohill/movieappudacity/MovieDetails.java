@@ -52,7 +52,9 @@ public class MovieDetails extends AppCompatActivity{
             movieRelease.setText(movieReleaseStr);
             movieSynop.setText(movieSynopsisStr);
             movieVote.setText(movieVoteStr);
-            Picasso.with(this).load(movieImageStr).into(movieImage);
+            String link = "http://image.tmdb.org/t/p/w185";
+            link = link + movieImageStr;
+            Picasso.with(this).load(link).into(movieImage);
         }
     }
 }

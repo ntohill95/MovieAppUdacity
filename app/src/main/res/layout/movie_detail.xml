@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@color/palePurple"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
 
     <ImageView
         android:layout_width="match_parent"
+        android:scaleType="center"
         android:layout_height="200dp"
         android:id="@+id/movie_image"/>
     <!-- Remove hard coded image height  -->
@@ -14,6 +21,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/MovieDetailHeadings"
         android:text="@string/movie_title"/>
     <TextView
         android:id="@+id/movie_title_tv"
@@ -23,6 +31,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/MovieDetailHeadings"
         android:text="@string/movie_release"/>
     <TextView
         android:id="@+id/movie_release_tv"
@@ -32,6 +41,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/MovieDetailHeadings"
         android:text="@string/movie_vote"/>
     <TextView
         android:id="@+id/movie_vote"
@@ -41,11 +51,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/MovieDetailHeadings"
         android:text="@string/movie_synopsis"/>
     <TextView
         android:id="@+id/movie_synop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""/>
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

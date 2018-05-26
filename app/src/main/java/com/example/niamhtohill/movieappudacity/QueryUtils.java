@@ -108,7 +108,6 @@ public final class QueryUtils {
                     movies.add(new Movie(movieTitle,movieRelease,movieSynopsis,movieAverage,movieImageUrl));
                 }
             }
-
         }catch (JSONException e){
             Log.e("JSON ERROR: ", e.getMessage());
         }

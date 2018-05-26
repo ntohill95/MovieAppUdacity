@@ -99,16 +99,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     //if the user selects "popular" from the settings menu
                     if(options[which] == popular){
                         //need to create a new URL for popular
-                        MOVIES_URL_LINK_FINAL = MOVIES_URL_LINK;
+                        MOVIES_URL_LINK_FINAL = MOVIES_URL_LINK+API_KEY;
                         boolean connectionStatus = checkInternet();
                         //check is there a connection to reorder movies
                         if(connectionStatus){
                             getLoaderManager().restartLoader(0,null,MainActivity.this).forceLoad();
+                            noInternet = findViewById(R.id.no_connection_tv);
                             noInternet.setVisibility(View.INVISIBLE);
                         }else{
                             //if no connection then stop loading and display TV to user
                             loadingBar = findViewById(R.id.progressBar);
                             loadingBar.setVisibility(View.GONE);
+                            noInternet = findViewById(R.id.no_connection_tv);
                             noInternet.setVisibility(View.VISIBLE);
                             movieAdapter.clear();
                         }
@@ -116,16 +118,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     //if the user selects "highest rated" from the menu
                     if(options[which]==rated){
                         //need to create a new URL for rated
-                        MOVIES_URL_LINK_FINAL = MOVIES_URL_RATED;
+                        MOVIES_URL_LINK_FINAL = MOVIES_URL_RATED+API_KEY;
                         boolean connectionStatus = checkInternet();
                         //check is there a connection to reorder movies
                         if(connectionStatus){
                             getLoaderManager().restartLoader(0,null,MainActivity.this).forceLoad();
+                            noInternet = findViewById(R.id.no_connection_tv);
                             noInternet.setVisibility(View.INVISIBLE);
                         }else{
                             //if no connection then stop loading and display TV to user
                             loadingBar = findViewById(R.id.progressBar);
                             loadingBar.setVisibility(View.GONE);
+                            noInternet = findViewById(R.id.no_connection_tv);
                             noInternet.setVisibility(View.VISIBLE);
                             movieAdapter.clear();
                         }
